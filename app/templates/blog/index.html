@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    All Blogs
+{% endblock %}
+
+{% block content %}
+    <div class="container my-3">
+        <h1 class="text-light heading">All Blogs:</h1>
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 bg-dark text-light">
+                        <div class="card-body">
+                            <h5 class="card-title sub-heading"><a href="/post/{{post.id}}">{{ post.title }}</a></h5>
+                            <h6 class="card-subtitle mb-2 text-muted category">{{ post.category }}</h6>
+                            <p class="card-text">{{ post.content|truncate(100, True) }}</p>
+                        </div>
+                        <div class="card-footer d-flex">
+                            <button class="btn btn-primary"><a href="/post/edit/{{ post.id }}">Edit</a></button>
+                            <form id="{{ post.id }}" class="delete-post">
+                                <button type="submit" class="btn btn-danger mx-2">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block bodyfooter %}
+    <script>
+        document.addEventListener('submit', (e) => {
+            if (e.target.classList.contains('delete-post')) {
+                e.preventDefault();
+                const id = e.target.id;
+                fetch(`/post/${id}`, {
+                    method: 'DELETE'
+                }).then(() => {
+                    window.location.href = '/post/'
+                });
+            }
+        });
+    </script>
+{% endblock %}

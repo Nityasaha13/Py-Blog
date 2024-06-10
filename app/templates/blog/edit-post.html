@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Post {{post.id}}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-light">Edit Post:</h2>
+    <form method="POST" action="/post/">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="{{post.title}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category:</label>
+            <input type="text" class="form-control" id="category" name="category" placeholder="Enter category" value="{{post.category}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">Content:</label>
+            <textarea class="form-control" id="content" rows="8" name="content" placeholder="Write here..." required>{{post.content}}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+{% endblock %}
