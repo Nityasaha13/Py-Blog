@@ -1,5 +1,25 @@
 {% extends "layout.html" %}
 
-{% block content%}
-<h1>Login page</h1>
+{% block content %}
+<div class="container mt-5">
+  <h1>Login page</h1>
+  <form method="POST" action="{{ url_for('auth.login') }}" class="needs-validation" novalidate>
+      <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+          <div class="invalid-feedback">
+              Please enter a valid email address.
+          </div>
+      </div>
+      <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+          <div class="invalid-feedback">
+              Please enter your password.
+          </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+</div>
+
 {% endblock %}
