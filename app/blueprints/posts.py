@@ -32,9 +32,29 @@ def delete(post_id):
         return "Delete"
 
 
-@bp.route("/post/edit/<int:post_id>/", methods=["PUT"])
+@bp.route("/post/update/<int:post_id>/", methods=["PUT"])
 def update(post_id):
-    return  "Update logic will be here"
+    post = PostModel.query.get(post_id)
+    if not post:
+        return "Post not found", 404
+
+    # Retrieve new data from the request
+    new_title = request.json.get('title')
+    new_category = request.json.get('category')
+    new_content = request.json.get('content')
+
+    # Update post attributes if new data is provided
+    if new_title:
+        post.title = new_title
+    if new_category:
+        post.category = new_category
+    if new_content:
+        post.content = new_content
+
+    # Commit changes to the database
+    db.session.commit()
+
+    return "Post updated successfully"
      
 
 @bp.route("/post/edit/<int:post_id>/")

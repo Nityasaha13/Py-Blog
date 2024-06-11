@@ -1,26 +1,61 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Edit Post {{post.id}}
+    Edit Post {{ post.id }}
 {% endblock %}
 
 {% block content %}
 <div class="container mt-5">
     <h2 class="text-light">Edit Post:</h2>
-    <form method="POST" action="/post/">
+    <form id="update-post" action="/post/update/{{ post.id }}" method="POST">
         <div class="mb-3">
             <label for="title" class="form-label">Title:</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="{{post.title}}" required>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" value="{{ post.title }}" required>
         </div>
         <div class="mb-3">
             <label for="category" class="form-label">Category:</label>
-            <input type="text" class="form-control" id="category" name="category" placeholder="Enter category" value="{{post.category}}" required>
+            <input type="text" class="form-control" id="category" name="category" placeholder="Enter category" value="{{ post.category }}" required>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content:</label>
-            <textarea class="form-control" id="content" rows="8" name="content" placeholder="Write here..." required>{{post.content}}</textarea>
+            <textarea class="form-control" id="content" rows="8" name="content" placeholder="Write here..." required>{{ post.content }}</textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>
 {% endblock %}
+
+{% block bodyfooter %}
+<script>
+    document.getElementById('update-post').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const id = '{{ post.id }}';
+        const title = document.getElementById('title').value;
+        const category = document.getElementById('category').value;
+        const content = document.getElementById('content').value;
+
+        fetch(`/post/update/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: title,
+                category: category,
+                content: content
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                window.location.href = `/post/edit/${id}`;
+            } else {
+                console.error('Error:', data);
+            }
+        })
+        .catch(error => console.error('Error updating post:', error));
+    });
+</script>
+{% endblock %}
+
