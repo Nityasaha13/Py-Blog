@@ -11,12 +11,14 @@
     <div class="mt-4">
         <p>{{ post.content }}</p>
     </div>
+    {% if current_user.is_authenticated %}
     <div class="d-flex">
         <button class="btn btn-primary"><a href="/post/edit/{{ post.id }}">Edit</a></button>
         <form id="{{ post.id }}" class="delete-post">
             <button type="submit" class="btn btn-danger mx-2">Delete</button>
         </form>
     </div>
+    {% endif  %}
 </div>
 {% endblock %}
 

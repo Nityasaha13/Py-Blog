@@ -4,11 +4,6 @@ from app.extensions import db
 
 bp = Blueprint("post",__name__)
 
-@bp.route("/")
-def home():
-    posts= PostModel.query.all()
-    return render_template('blog/index.html', posts=posts)
-
 @bp.route("/post/")
 def index():
     posts= PostModel.query.all()

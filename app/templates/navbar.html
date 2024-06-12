@@ -7,12 +7,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
+                    <a class="nav-link" href="/news/">News</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/post/">Blogs</a>
                 </li>
+                
+                {% if current_user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="/post/create">Add Blog</a>
                 </li>
-                {% if current_user.is_authenticated %}
                     <li class="nav-item">
                         <span class="nav-link">Welcome, {{ current_user.name }}</span>
                     </li>

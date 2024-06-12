@@ -3,8 +3,18 @@ from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.models.user import User
 from app.extensions import db
+from app.blueprints.posts import bp
 
 auth = Blueprint('auth', __name__)
+
+@bp.route("/")
+def home():
+    return render_template('home-page.html')
+
+@bp.route("/news/")
+def news():
+    return render_template('home-page.html')
+
 
 @auth.route("/login/", methods=["GET", "POST"])
 def login():
