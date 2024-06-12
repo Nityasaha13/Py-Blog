@@ -1,19 +1,20 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.models.user import User
-from app.extensions import db
+from app.extensions import db, news_api
 from app.blueprints.posts import bp
+import requests
 
 auth = Blueprint('auth', __name__)
 
+
 @bp.route("/")
 def home():
-    return render_template('home-page.html')
-
-@bp.route("/news/")
-def news():
-    return render_template('home-page.html')
+    response = requests.get(news_api)
+    news_data = response.json()
+    articles = news_data.get('articles', [])
+    return render_template('news-home-page.html',articles=articles)
 
 
 @auth.route("/login/", methods=["GET", "POST"])
@@ -29,6 +30,7 @@ def login():
         else:
             flash("Invalid email or password", "error")
     return render_template('auth/login.html')
+
 
 @auth.route("/registration/", methods=["GET", "POST"])
 def registration():

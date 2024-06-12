@@ -5,17 +5,19 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container my-3">
+    <div class="container mt-4">
         <h1 class="text-light heading">All Blogs:</h1>
         <div class="row">
             {% for post in posts %}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100 bg-dark text-light">
-                        <div class="card-body">
+                        <div class="card h-100">
                             <img src="https://placehold.co/600x400" alt="thumb" style="width:100%; height:200px; object-fit:cover"/>
-                            <h5 class="card-title sub-heading mt-1"><a href="/post/{{post.id}}">{{ post.title }}</a></h5>
-                            <h6 class="card-subtitle mb-2 text-muted category">{{ post.category }}</h6>
-                            <p class="card-text">{{ post.content|truncate(100, True) }}</p>
+                            <div class="card-body">
+                                <h5 class="card-title sub-heading mt-1"><a href="/post/{{post.id}}">{{ post.title }}</a></h5>
+                                <h6 class="card-subtitle mb-2 text-muted category">{{ post.category }}</h6>
+                                <p class="card-text">{{ post.content|truncate(100, True) }}</p>
+                            </div>
                         </div>
                         {% if current_user.is_authenticated %}
                         <div class="card-footer d-flex">

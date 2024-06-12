@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1 class="heading">Latest News from India:</h1>
+    <div class="row">
+        {% for article in articles %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if article.urlToImage %}
+                <img src="{{ article.urlToImage }}" class="card-img-top" alt="News image" style="width:100%; height:200px; object-fit:cover">
+                {% else %}
+                <img src="https://placehold.co/600x400" alt="thumb" style="width:100%; height:200px; object-fit:cover"/>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <p class="card-text">
+                        {% if article.description %}
+                        {{ article.description[:100] }}{% if article.description|length > 100 %}...{% endif %}
+                        {% else %}
+                        Not found.
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Author: {{ article.author or 'Unknown' }}</small><br>
+                    <small class="text-muted">Source: {{ article.source.name or 'Unknown' }}</small><br>
+                    <a href="{{ article.url }}" class="btn btn-primary mt-2" target="_blank">Read more</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
